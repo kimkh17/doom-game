@@ -147,6 +147,7 @@ function spawnBall(x, level = 1, y = 50) {
     ball.level = level;
     ball.radius = radius;
     ball.merged = false;
+    ball.enteredField = false;
 
     balls.push(ball);
 
@@ -168,6 +169,22 @@ function updateDoom() {
 
     doomText.textContent =
         `세계 멸망도 : ${DOOM[highestLevel - 1]}`;
+}
+function checkFailGameOver() {
+
+    for (const ball of balls) {
+
+        if (
+            ball.position.y - ball.radius <
+            GAME_OVER_LINE
+        ) {
+
+            gameOver = true;
+            gameResult = "fail";
+
+            return;
+        }
+    }
 }
 
 // =====================
