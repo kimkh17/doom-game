@@ -339,14 +339,14 @@ function draw() {
     ctx.setLineDash([]);
 
     // 나머지 draw 코드
-}
+
 
     ctx.clearRect(
         0,
         0,
         canvas.width,
         canvas.height
-    );
+    );}
 
     // 떨어진 공
 
