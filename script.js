@@ -1,4 +1,6 @@
 let gameOver = false;
+let gameResult = "";
+const GAME_OVER_LINE = 120;
 const DOOM = [
     "0%",
     "1%",
@@ -311,6 +313,19 @@ function drawBall(ball) {
 }
 
 function draw() {
+    ctx.beginPath();
+
+ctx.setLineDash([10, 10]);
+
+ctx.moveTo(0, GAME_OVER_LINE);
+ctx.lineTo(canvas.width, GAME_OVER_LINE);
+
+ctx.strokeStyle = "red";
+ctx.lineWidth = 3;
+
+ctx.stroke();
+
+ctx.setLineDash([]);
 
     ctx.clearRect(
         0,
@@ -364,6 +379,8 @@ function draw() {
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
 
+   if (gameResult === "success") {
+
     ctx.font = "bold 32px Arial";
 
     ctx.fillText(
@@ -372,13 +389,24 @@ function draw() {
         canvas.height / 2 - 30
     );
 
-    ctx.font = "22px Arial";
+} else {
+
+    ctx.font = "bold 24px Arial";
 
     ctx.fillText(
-        "세계 멸망도 : 100%",
+        "❌ 세계 멸망에 실패하였습니다 ❌",
         canvas.width / 2,
-        canvas.height / 2 + 20
+        canvas.height / 2 - 30
     );
+}
+
+ctx.font = "22px Arial";
+
+ctx.fillText(
+    doomText.textContent,
+    canvas.width / 2,
+    canvas.height / 2 + 20
+);
 }
 }
 
@@ -389,6 +417,10 @@ function draw() {
 function gameLoop() {
 
     Engine.update(engine);
+
+    if (!gameOver) {
+        checkFailGameOver();
+    }
 
     draw();
 
