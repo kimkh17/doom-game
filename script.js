@@ -260,10 +260,11 @@ Events.on(engine, "collisionStart", (event) => {
             if (newLevel >= 11) {
 
     gameOver = true;
+    gameResult = "success";
 
     doomText.textContent =
         "세계 멸망도 : 100%";
-}
+            }
 
             const x =
                 (bodyA.position.x + bodyB.position.x) / 2;
