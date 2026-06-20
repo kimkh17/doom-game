@@ -116,17 +116,20 @@ function getRandomLevel() {
 
     const random = Math.random();
 
-    if (random < 0.65) {
+    if (random < 0.30) {
         return 1;
     }
-    else if (random < 0.87) {
+    else if (random < 0.55) {
         return 2;
     }
-    else if (random < 0.97) {
+    else if (random < 0.75) {
         return 3;
     }
-    else {
+    else if (random < 0.90) {
         return 4;
+    }
+    else {
+        return 5;
     }
 }
 function spawnBall(x, level = 1, y = 50) {
