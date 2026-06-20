@@ -1,4 +1,3 @@
-const GAME_OVER_LINE = 120;
 let gameOver = false;
 const DOOM = [
     "0%",
@@ -312,7 +311,6 @@ function drawBall(ball) {
 }
 
 function draw() {
-function draw() {
 
     ctx.clearRect(
         0,
@@ -321,30 +319,15 @@ function draw() {
         canvas.height
     );
 
-    // 게임오버 선
-    ctx.beginPath();
-
-    ctx.setLineDash([10, 10]);
-
-    ctx.moveTo(0, GAME_OVER_LINE);
-    ctx.lineTo(canvas.width, GAME_OVER_LINE);
-
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-
-    ctx.stroke();
-
-    ctx.setLineDash([]);
-
     // 떨어진 공
-    for (const ball of balls) {
 
+    for (const ball of balls) {
         drawBall(ball);
     }
 
     // 대기 공
-    const radius = SIZES[nextLevel - 1];
 
+    const radius = SIZES[nextLevel - 1];
     ctx.save();
 
     ctx.beginPath();
@@ -359,8 +342,8 @@ function draw() {
 
     ctx.clip();
 
-    ctx.drawImage(
-        images[nextLevel - 1],
+   ctx.drawImage(
+    images[nextLevel - 1],
         nextX - radius,
         30 - radius,
         radius * 2,
@@ -368,38 +351,35 @@ function draw() {
     );
 
     ctx.restore();
-
-    // 게임오버 화면
     if (gameOver) {
 
-        ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-        ctx.fillRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
 
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
+    ctx.font = "bold 32px Arial";
 
-        ctx.font = "bold 32px Arial";
+    ctx.fillText(
+        "☢ 세계가 멸망했습니다 ☢",
+        canvas.width / 2,
+        canvas.height / 2 - 30
+    );
 
-        ctx.fillText(
-            "☢ 세계가 멸망했습니다 ☢",
-            canvas.width / 2,
-            canvas.height / 2 - 30
-        );
+    ctx.font = "22px Arial";
 
-        ctx.font = "22px Arial";
-
-        ctx.fillText(
-            "세계 멸망도 : 100%",
-            canvas.width / 2,
-            canvas.height / 2 + 20
-        );
-    }
+    ctx.fillText(
+        "세계 멸망도 : 100%",
+        canvas.width / 2,
+        canvas.height / 2 + 20
+    );
+}
 }
 
 // =====================
