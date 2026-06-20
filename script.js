@@ -313,6 +313,7 @@ function drawBall(ball) {
 }
 
 function draw() {
+    console.log("draw 실행중");
 
     // 화면 지우기
     ctx.clearRect(
