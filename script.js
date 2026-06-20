@@ -313,6 +313,8 @@ function drawBall(ball) {
 }
 
 function draw() {
+    ctx.fillStyle = "red";
+ctx.fillRect(10, 10, 50, 50);
     ctx.beginPath();
 
 ctx.setLineDash([10, 10]);
