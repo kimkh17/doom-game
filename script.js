@@ -48,6 +48,7 @@ for (const file of imageFiles) {
 
     const img = new Image();
     img.src = file;
+
     images.push(img);
 }
 
@@ -169,6 +170,7 @@ function updateDoom() {
 // =====================
 
 canvas.addEventListener("pointermove", (event) => {
+    if (!isHolding) return;
 
     const rect = canvas.getBoundingClientRect();
 
@@ -183,8 +185,24 @@ canvas.addEventListener("pointermove", (event) => {
         nextX = canvas.width - radius;
 });
 
-canvas.addEventListener("pointerdown", () => {
+
+let isHolding = false;
+
+canvas.addEventListener("pointerdown", (event) => {
+
     if (gameOver) return;
+
+    isHolding = true;
+
+    const rect = canvas.getBoundingClientRect();
+
+    nextX = event.clientX - rect.left;
+});
+canvas.addEventListener("pointerup", () => {
+
+    if (gameOver) return;
+
+    isHolding = false;
 
     spawnBall(nextX, nextLevel);
 
