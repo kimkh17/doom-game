@@ -47,8 +47,7 @@ const images = [];
 for (const file of imageFiles) {
 
     const img = new Image();
-    img.src = `images/${file}`;
-
+    img.src = file;
     images.push(img);
 }
 
