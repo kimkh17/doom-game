@@ -313,21 +313,33 @@ function drawBall(ball) {
 }
 
 function draw() {
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
     ctx.fillStyle = "red";
-ctx.fillRect(10, 10, 50, 50);
+    ctx.fillRect(10, 10, 50, 50);
+
     ctx.beginPath();
 
-ctx.setLineDash([10, 10]);
+    ctx.setLineDash([10, 10]);
 
-ctx.moveTo(0, GAME_OVER_LINE);
-ctx.lineTo(canvas.width, GAME_OVER_LINE);
+    ctx.moveTo(0, GAME_OVER_LINE);
+    ctx.lineTo(canvas.width, GAME_OVER_LINE);
 
-ctx.strokeStyle = "red";
-ctx.lineWidth = 3;
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
 
-ctx.stroke();
+    ctx.stroke();
 
-ctx.setLineDash([]);
+    ctx.setLineDash([]);
+
+    // 나머지 draw 코드
+}
 
     ctx.clearRect(
         0,
