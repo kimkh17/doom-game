@@ -1,6 +1,4 @@
 let gameOver = false;
-let gameResult = "";
-const GAME_OVER_LINE = 120;
 const DOOM = [
     "0%",
     "1%",
@@ -147,7 +145,6 @@ function spawnBall(x, level = 1, y = 50) {
     ball.level = level;
     ball.radius = radius;
     ball.merged = false;
-    ball.enteredField = false;
 
     balls.push(ball);
 
@@ -169,22 +166,6 @@ function updateDoom() {
 
     doomText.textContent =
         `세계 멸망도 : ${DOOM[highestLevel - 1]}`;
-}
-function checkFailGameOver() {
-
-    for (const ball of balls) {
-
-        if (
-            ball.position.y - ball.radius <
-            GAME_OVER_LINE
-        ) {
-
-            gameOver = true;
-            gameResult = "fail";
-
-            return;
-        }
-    }
 }
 
 // =====================
@@ -260,11 +241,10 @@ Events.on(engine, "collisionStart", (event) => {
             if (newLevel >= 11) {
 
     gameOver = true;
-    gameResult = "success";
 
     doomText.textContent =
         "세계 멸망도 : 100%";
-            }
+}
 
             const x =
                 (bodyA.position.x + bodyB.position.x) / 2;
@@ -331,9 +311,7 @@ function drawBall(ball) {
 }
 
 function draw() {
-    console.log("draw 실행중");
 
-    // 화면 지우기
     ctx.clearRect(
         0,
         0,
@@ -341,29 +319,15 @@ function draw() {
         canvas.height
     );
 
-    // 게임오버 선
-    ctx.beginPath();
-
-    ctx.setLineDash([10, 10]);
-
-    ctx.moveTo(0, GAME_OVER_LINE);
-    ctx.lineTo(canvas.width, GAME_OVER_LINE);
-
-    ctx.strokeStyle = "red";
-    ctx.lineWidth = 3;
-
-    ctx.stroke();
-
-    ctx.setLineDash([]);
-
     // 떨어진 공
+
     for (const ball of balls) {
         drawBall(ball);
     }
 
     // 대기 공
-    const radius = SIZES[nextLevel - 1];
 
+    const radius = SIZES[nextLevel - 1];
     ctx.save();
 
     ctx.beginPath();
@@ -378,8 +342,8 @@ function draw() {
 
     ctx.clip();
 
-    ctx.drawImage(
-        images[nextLevel - 1],
+   ctx.drawImage(
+    images[nextLevel - 1],
         nextX - radius,
         30 - radius,
         radius * 2,
@@ -387,51 +351,35 @@ function draw() {
     );
 
     ctx.restore();
-
-    // 게임오버 화면
     if (gameOver) {
 
-        ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.fillStyle = "rgba(0, 0, 0, 0.8)";
+    ctx.fillRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
 
-        ctx.fillRect(
-            0,
-            0,
-            canvas.width,
-            canvas.height
-        );
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
 
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
+    ctx.font = "bold 32px Arial";
 
-        if (gameResult === "success") {
+    ctx.fillText(
+        "☢ 세계가 멸망했습니다 ☢",
+        canvas.width / 2,
+        canvas.height / 2 - 30
+    );
 
-            ctx.font = "bold 32px Arial";
+    ctx.font = "22px Arial";
 
-            ctx.fillText(
-                "☢ 세계가 멸망했습니다 ☢",
-                canvas.width / 2,
-                canvas.height / 2 - 30
-            );
-
-        } else {
-
-            ctx.font = "bold 24px Arial";
-
-            ctx.fillText(
-                "❌ 세계 멸망에 실패하였습니다 ❌",
-                canvas.width / 2,
-                canvas.height / 2 - 30
-            );
-        }
-
-        ctx.font = "22px Arial";
-
-        ctx.fillText(
-            doomText.textContent,
-            canvas.width / 2,
-            canvas.height / 2 + 20
-        );
-    }
+    ctx.fillText(
+        "세계 멸망도 : 100%",
+        canvas.width / 2,
+        canvas.height / 2 + 20
+    );
+}
 }
 
 // =====================
@@ -441,10 +389,6 @@ function draw() {
 function gameLoop() {
 
     Engine.update(engine);
-
-    if (!gameOver) {
-        checkFailGameOver();
-    }
 
     draw();
 
