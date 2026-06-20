@@ -346,7 +346,7 @@ function draw() {
         0,
         canvas.width,
         canvas.height
-    );}
+    );
 
     // 떨어진 공
 
